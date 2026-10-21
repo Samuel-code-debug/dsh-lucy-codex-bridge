@@ -1,0 +1,14 @@
+# Local development harness includes machine-specific paths and diagnostics.
+dev/
+
+# Generated package archives and local installation/runtime data.
+*.tgz
+node_modules/
+.env
+.env.*
+.npmrc
+.dsh/
+settings.json
+sessions/
+*.log
+*.tmp
