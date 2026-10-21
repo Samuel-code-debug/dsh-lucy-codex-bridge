@@ -1,7 +1,7 @@
 {
   "name": "dsh-lucy-codex-bridge",
   "version": "0.2.1",
-  "description": "Lucy 与砾子的持久会话桥接：在 DSH 内讨论，单轮调用，可停止。",
+  "description": "DeepSeek 与砾子的持久会话桥接：在 DSH 内讨论，单轮调用，可停止。",
   "repository": {
     "type": "git",
     "url": "https://github.com/Samuel-code-debug/dsh-lucy-codex-bridge.git"
@@ -16,3 +16,4 @@
   "dsh": { "bundle": { "patch": "./cordis.patch.yml" }, "client": { "platform": "web" } },
   "license": "MIT"
 }
+
