@@ -29,7 +29,7 @@
 
 每个 DSH Session 独立绑定一个持久 Codex Thread，重启后继续。它不是 Codex 桌面原聊天的克隆，不会自动获得桌面聊天历史。
 
-首轮最多附带最近 6000 字符的用户/DeepSeek 公开文字，后续仅同步新增文字。附件、工具输出和思考过程不自动转发；必要内容由 DeepSeek 放入提问。旧绑定线程已经收到的上下文不会因升级被清空。
+每次调用只向 Codex 发送本轮 `codex_discuss` 明确传入的 `message`，不会自动读取或拼接 DSH 会话历史。附件、工具输出和思考过程也不会自动转发；需要讨论的上下文应由用户在本轮明确提供并确认后放入问题。面板为显示消息和统计会在本地读取公开事件，这些事件不会因此加入 Codex prompt。持久 Codex Thread 会保留此前发送给该线程的讨论上下文。
 
 成功调用后的连接空闲 5 分钟内复用，最多保留 4 个连接（包括额度读取连接）。中断、失败和卸载都会关闭相应进程；失败不静默换新会话。UI 展示连接、恢复上下文、等待回复、回复中等状态以及耗时。减少上下文与复用连接只减少可控开销，不保证服务端回复时间。
 
@@ -42,12 +42,10 @@
 可选配置 `%USERPROFILE%/.dsh/codex-bridge/settings.json`：
 
 ```json
-{
-  "maxContextChars": 6000
-}
+{}
 ```
 
-还支持 `codexCommand`（可执行文件绝对路径）、`model`、`effort`、`instructions`（讨论附加指令，最多 8000 字符）。未填时沿用 Codex 模型配置并自动发现 Windows 桌面附带的 Codex。更改配置后重启 DSH。
+还支持 `codexCommand`（可执行文件绝对路径）、`model`、`effort`、`instructions`（讨论附加指令，最多 8000 字符）。未填时沿用 Codex 模型配置并自动发现 Windows 桌面附带的 Codex。`maxContextChars` 已废弃，不再读取或生效。更改配置后重启 DSH。
 
 绑定、最近用量和运行状态位于 `%USERPROFILE%/.dsh/codex-bridge/sessions/`，真实 Codex 历史由 Codex 自己持久保存。面板从 DSH 公开事件增量整理记录，不建立第二套聊天数据库。前后端走宿主原生 Typert 通道和 Session 查找，不启动额外 HTTP 服务。
 
